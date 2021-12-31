@@ -1,0 +1,52 @@
+<h1 id="tableLabel">Account Statement</h1>
+<!--{{statementRequestModel | json}}-->
+
+<form class="row g-3" (ngSubmit)="onSubmit()">
+  <div class="col-auto">
+    <label for="username" class="visually-hidden">Username</label>
+    <input type="text" readonly class="form-control-plaintext" id="username" value="Authenticated Username">
+  </div>
+  <div class="col-auto">
+
+    <label for="startdate" class="visually-hidden">Start Date</label>
+    <input id="startdate" name="startdate" [(ngModel)]="statementRequestModel.startdate"
+           type="date" class="form-control" placeholder="Today Date" />
+  </div>
+  <div class="col-auto">
+    <label for="enddate" class="visually-hidden">End Date</label>
+    <input id="enddate" name="enddate" [(ngModel)]="statementRequestModel.enddate"
+           type="date" class="form-control" placeholder="End Date" />
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Submit</button>
+  </div>
+</form>
+
+
+<p *ngIf="!accountStatements"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="haSaccountStatements">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Type</th>
+      <th>Source</th>
+      <th>Destination</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let accountStatement of accountStatements">
+
+      <td>{{ accountStatement.id}}</td>
+      <td>{{ accountStatement.transactionType }}</td>
+      <td>{{ accountStatement.sourceAccount }}</td>
+      <td>{{ accountStatement.destinationAccount }}</td>
+      <td>{{ accountStatement.amount| currency:'NGN'}}</td>
+      <td>{{ accountStatement.transactionDate|date: 'longDate' }}</td>
+      <td>{{ accountStatement.transactionDetails }}</td>
+    </tr>
+  </tbody>
+</table>
